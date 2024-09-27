@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1' # Run every Monday at midnight UTC
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq curl
+          #sing-box
+          sb=1.9.6
+          curl -L https://github.com/SagerNet/sing-box/releases/download/v$sb/sing-box-$sb-linux-amd64.tar.gz  -o sing-box-$sb-linux-amd64.tar.gz
+          tar xzvf sing-box-$sb-linux-amd64.tar.gz
+          mv ./sing-box-$sb-linux-arm64/sing-box /root
+          chmod +x ./sing-box
+          rm -r ./sing-box-$sb-linux-arm64.tar.gz
+          rm -r ./sing-box-$sb-linux-arm64
+
+      - name: Generate Geo Rule
+        run: |
+          chmod +x script/generate.sh
+          bash script/generate.sh
+
+      - name: Set timezone to WIB Jakarta
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Jakarta"
+          timezoneMacos: "Asia/Jakarta"
+          timezoneWindows: "Indonesia Standard Time"
+
+      - name: Set Date
+        id: set_date
+        run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: geo-rule-${{ env.DATE }}
+          release_name: GEO-RULE-${{ env.DATE }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./asn_list.conf
+          asset_name: asn_list.conf
+          asset_content_type: text/plain
+
+      - name: Delete Old Release
+        uses: dev-drprasad/delete-older-releases@v0.2.1
+        with:
+          repo: faidc/geo-rule
+          keep_latest: 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
