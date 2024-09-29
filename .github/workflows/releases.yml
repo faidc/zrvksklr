@@ -23,8 +23,8 @@ jobs:
           tar xzvf sing-box-$sb-linux-amd64.tar.gz
           mv ./sing-box-$sb-linux-amd64/sing-box /root
           chmod +x ./sing-box
-          rm -r ./sing-box-$sb-linux-arm64.tar.gz
-          rm -r ./sing-box-$sb-linux-arm64
+          rm -r ./sing-box-$sb-linux-amd64.tar.gz
+          rm -r ./sing-box-$sb-linux-amd64
 
       - name: Generate Geo Rule
         run: |
