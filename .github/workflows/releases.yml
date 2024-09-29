@@ -1,4 +1,4 @@
-name: Release GEO
+name: Release
 
 on:
   workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
           sb=1.9.6
           curl -L https://github.com/SagerNet/sing-box/releases/download/v$sb/sing-box-$sb-linux-amd64.tar.gz  -o sing-box-$sb-linux-amd64.tar.gz
           tar xzvf sing-box-$sb-linux-amd64.tar.gz
-          mv ./sing-box-$sb-linux-arm64/sing-box /root
+          mv ./sing-box-$sb-linux-amd64/sing-box /root
           chmod +x ./sing-box
           rm -r ./sing-box-$sb-linux-arm64.tar.gz
           rm -r ./sing-box-$sb-linux-arm64
