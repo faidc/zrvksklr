@@ -1,6 +1,6 @@
 #!/bin/bash
 
-conf=/etc/sing-box
+conf=/sing-box
 sb="./sing-box"
 
 fetch_file(){
@@ -52,6 +52,5 @@ main(){
     wait $!
     export_compile "geoip" rule_ip[@]
     cleanup
-    check_and_restart_service
 }
 main
