@@ -44,21 +44,23 @@ jobs:
 
       - name: Create Release
         id: create_release
-        run: |
-          TAG="geo-rule-${{ env.DATE }}"
-          echo "Creating release: $TAG"
-          upload_url=$(gh release create "$TAG" --title "Release $TAG" --notes "Automated release for $TAG" --json uploadUrl -q .uploadUrl)
-          echo "upload_url=$upload_url" >> $GITHUB_ENV
+        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Menggunakan GitHub token default
         with:
-          upload_url: ${{ env.upload_url }}
-          asset_path: ./conf/rules/*.srs  # Jalur ke semua file .srs
-          asset_name: ${{ github.run_id }}-output.srs  # Misalnya, gunakan ID run untuk penamaan
-          asset_content_type: application/octet-stream
+          tag_name: daily-release-${{ github.run_id }}
+          release_name: "Daily Release ${{ github.run_id }}"
+          body: "This is an automated daily release."
+          draft: false
+          prerelease: false
+
+
+      - name: Upload All Rule Files
+        run: |
+          for file in /etc/sing-box/rules/*.srs; do
+            asset_name=$(basename $file)
+            gh release upload ${{ steps.create_release.outputs.upload_url }} "$file" --name "$asset_name"
+          done
 
 
       - name: Delete Old Release
