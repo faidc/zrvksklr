@@ -1,4 +1,4 @@
-name: Release
+name: Release GEO
 
 on:
   workflow_dispatch:
@@ -24,7 +24,7 @@ jobs:
           sudo mv ./sing-box-$sb-linux-amd64/sing-box /root/sing-box
           rm -r ./sing-box-$sb-linux-amd64.tar.gz
           rm -r ./sing-box-$sb-linux-amd64
-          chmod +x sing-box
+          chmod +x ./sing-box
           
       - name: Generate Geo Rule
         run: |
