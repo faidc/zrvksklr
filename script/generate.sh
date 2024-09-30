@@ -29,7 +29,7 @@ export_compile(){
 }
 
 cleanup() {
-    rm -r {geoip.db,geosite.db,adguard.txt}
+    rm -r {geoip.db,geosite.db}
 }
 
 main(){
