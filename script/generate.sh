@@ -1,6 +1,6 @@
 #!/bin/bash
 
-conf=/sing-box
+conf=/etc/sing-box
 sb="./sing-box"
 
 fetch_file(){
