@@ -1,4 +1,4 @@
-name: Release GEO
+name: Release
 
 on:
   workflow_dispatch:
@@ -21,10 +21,10 @@ jobs:
           sb=1.9.6
           curl -L https://github.com/SagerNet/sing-box/releases/download/v$sb/sing-box-$sb-linux-amd64.tar.gz  -o sing-box-$sb-linux-amd64.tar.gz
           tar xzvf sing-box-$sb-linux-amd64.tar.gz
-          sudo mv ./sing-box-$sb-linux-amd64/sing-box /root/sing-box
+          sudo mv ./sing-box-$sb-linux-amd64/sing-box /usr/local/bin/sing-box
           rm -r ./sing-box-$sb-linux-amd64.tar.gz
           rm -r ./sing-box-$sb-linux-amd64
-          chmod +x ./sing-box
+          chmod +x ./usr/local/bin/sing-box
           
       - name: Generate Geo Rule
         run: |
