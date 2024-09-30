@@ -1,7 +1,7 @@
 #!/bin/bash
 
 conf=/etc/sing-box
-sb="./sing-box"
+sb="/sing-box"
 
 fetch_file(){
     local git_token="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"
