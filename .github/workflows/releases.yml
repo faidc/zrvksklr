@@ -1,4 +1,4 @@
-name: Release GEO
+name: Release
 
 on:
   workflow_dispatch:
@@ -57,7 +57,7 @@ jobs:
 
       - name: Upload All Rule Files
         run: |
-          for file in ./*.srs; do
+          for file in *.srs; do
             asset_name=$(basename $file)
             gh release upload ${{ steps.create_release.outputs.upload_url }} "$file" --name "$asset_name"
           done
