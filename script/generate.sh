@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sb="./sing-box"
+sb="/usr/local/bin/sing-box"
 
 fetch_file(){
     local rule_git="https://github.com/malikshi/sing-box-geo/releases/latest/download"
