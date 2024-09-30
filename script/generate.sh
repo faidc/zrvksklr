@@ -10,11 +10,9 @@ fetch_file(){
     local rules_dir="/etc/sing-box/rules"
 
     if [ ! -d "$rules_dir" ]; then
-        mkdir -p "$rules_dir"
+        sudo mkdir -p "$rules_dir"
     fi
 
-    curl -L --header "Authorization: token $git_token" $custom_git/rule-custom.json > $conf/rules/rule-custom.json
-    #curl -L https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt > $conf/rules/adguard.txt
     curl -L $rule_git/geoip.db -o $conf/geoip.db
     curl -L $rule_git/geosite.db -o $conf/geosite.db
 
