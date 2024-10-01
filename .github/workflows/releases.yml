@@ -1,4 +1,4 @@
-name: Release
+name: Release GEO
 
 on:
   workflow_dispatch:
@@ -48,8 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Menggunakan GitHub token default
         with:
-          tag_name: daily-release-${{ github.run_id }}
-          release_name: "Daily Release ${{ github.run_id }}"
+          tag_name: geo-rule-${{ github.run_id }}
+          release_name: GEO-RULE-${{ github.run_id }}-${{ env.DATE }}
           body: "This is an automated daily release."
           draft: false
           prerelease: false
