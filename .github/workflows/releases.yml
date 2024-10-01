@@ -1,4 +1,4 @@
-name: Release
+name: Release GEO
 
 on:
   workflow_dispatch:
@@ -61,7 +61,7 @@ jobs:
 
       - name: Delete Previous Release
         run: |
-          previous_tag="geo-rule-$((github.run_id - 1))"  # Menentukan tag rilisan sebelumnya
+          previous_tag="geo-rule-$((GITHUB_RUN_ID - 1))"  # Menentukan tag rilisan sebelumnya
           echo "Deleting previous release: $previous_tag"
           gh release delete "$previous_tag" --yes || echo "No previous release to delete."
         env:
