@@ -1,4 +1,4 @@
-name: Release
+name: Release GEO
 
 on:
   workflow_dispatch:
@@ -61,6 +61,8 @@ jobs:
           for file in ./*.srs; do
             gh release upload ${{ steps.create_release.outputs.upload_url }} "$file"
           done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Delete Old Release
         uses: dev-drprasad/delete-older-releases@v0.2.1
