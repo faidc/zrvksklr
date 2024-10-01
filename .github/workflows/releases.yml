@@ -1,4 +1,4 @@
-name: Release
+name: Release GEO
 
 on:
   workflow_dispatch:
@@ -56,11 +56,12 @@ jobs:
 
 
       - name: Upload All Rule Files
-        run: |
-          for file in *.srs; do
-            asset_name=$(basename $file)
-            gh release upload ${{ steps.create_release.outputs.upload_url }} "$file" --name "$asset_name"
-          done
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./*.srs
+          asset_name: "*.srs"
+          asset_content_type: application/octet-stream
 
 
       - name: Delete Old Release
