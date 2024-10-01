@@ -1,4 +1,4 @@
-name: Release GEO
+name: Release
 
 on:
   workflow_dispatch:
@@ -47,7 +47,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "geo-rule-${{ github.run_id }}" --title "GEO RULE ${{ env.DATE }}" --notes "Release Notes" --draft
+          gh release create "geo-rule-${{ github.run_id }}" --title "GEO RULE ${{ env.DATE }}" --notes "none"
 
       - name: Upload All Rule Files
         run: |
