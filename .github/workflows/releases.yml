@@ -1,4 +1,4 @@
-name: Release
+name: Release GEO
 
 on:
   workflow_dispatch:
@@ -47,21 +47,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "v1.0.0" --title "Release Title" --notes "Release Notes" --draft
+          gh release create "geo-rule-${{ github.run_id }}" --title "Release Title" --notes "Release Notes" --draft
   
       - name: List Files in Workspace
         run: |
           ls -l $GITHUB_WORKSPACE/
 
       - name: Upload All Rule Files
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Menggunakan GitHub token default
         run: |
+          release_tag="geo-rule-${{ github.run_id }}"
           for file in $GITHUB_WORKSPACE/*.srs; do
             echo "Uploading $file"
-            gh release upload ${{ steps.create_release.outputs.upload_url }} "$file" --clobber
-            echo "Upload URL: ${{ steps.create_release.outputs.upload_url }}"
+            gh release upload "$release_tag" "$file" --clobber
           done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Delete Old Release
         uses: dev-drprasad/delete-older-releases@v0.2.1
