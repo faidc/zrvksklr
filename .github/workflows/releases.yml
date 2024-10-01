@@ -1,4 +1,4 @@
-name: Release GEO
+name: Release
 
 on:
   workflow_dispatch:
@@ -65,6 +65,7 @@ jobs:
           for file in $GITHUB_WORKSPACE/*.srs; do
             echo "Uploading $file"
             gh release upload ${{ steps.create_release.outputs.upload_url }} "$file" --clobber
+            echo "Upload URL: ${{ steps.create_release.outputs.upload_url }}"
           done
 
       - name: Delete Old Release
