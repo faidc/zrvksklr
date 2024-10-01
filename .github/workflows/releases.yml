@@ -59,10 +59,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Delete Previous Release
-        run: |
-          previous_tag="geo-rule-$((GITHUB_RUN_ID - 1))"  # Menentukan tag rilisan sebelumnya
-          echo "Deleting previous release: $previous_tag"
-          gh release delete "$previous_tag" --yes || echo "No previous release to delete."
+      - name: Delete Old Releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Ambil tag rilis terbaru
+          latest_release_tag=$(gh release list --json tagName --jq '.[0].tagName')
+
+          echo "Latest release tag: $latest_release_tag"
+
+          # Ambil semua rilis
+          all_releases=$(gh release list --json tagName --jq '.[].tagName')
+
+          # Hapus semua rilis yang tidak sama dengan tag rilis terbaru
+          for release in $all_releases; do
+            if [ "$release" != "$latest_release_tag" ]; then
+              echo "Deleting release: $release"
+              gh release delete "$release" --yes
+            fi
+          done
