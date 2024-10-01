@@ -1,4 +1,4 @@
-name: Release GEO
+name: Release
 
 on:
   workflow_dispatch:
@@ -54,7 +54,10 @@ jobs:
           body: "This is an automated daily release."
           draft: false
           prerelease: false
-
+  
+      - name: List Files in Workspace
+        run: |
+          ls -l $GITHUB_WORKSPACE/
 
       - name: Upload All Rule Files
         uses: actions/upload-release-asset@v1
