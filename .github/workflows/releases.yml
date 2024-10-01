@@ -59,10 +59,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Delete Old Release
-        uses: dev-drprasad/delete-older-releases@v0.2.1
-        with:
-          repo: faidc/geo-rule
-          keep_latest: 1
+      - name: Delete Previous Release
+        run: |
+          previous_tag="geo-rule-$((github.run_id - 1))"  # Menentukan tag rilisan sebelumnya
+          echo "Deleting previous release: $previous_tag"
+          gh release delete "$previous_tag" --yes || echo "No previous release to delete."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
