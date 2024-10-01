@@ -1,4 +1,4 @@
-name: Release
+name: Release GEO
 
 on:
   workflow_dispatch:
@@ -41,18 +41,11 @@ jobs:
       - name: Set Date
         id: set_date
         run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
-
+        
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Menggunakan GitHub token default
-        with:
-          tag_name: geo-rule-${{ github.run_id }}
-          release_name: GEO-RULE-${{ github.run_id }}-${{ env.DATE }}
-          body: "This is an automated daily release."
-          draft: false
-          prerelease: false
+        run: |
+          gh release create "v1.0.0" --title "Release Title" --notes "Release Notes" --draft
   
       - name: List Files in Workspace
         run: |
