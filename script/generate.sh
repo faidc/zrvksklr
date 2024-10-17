@@ -7,8 +7,12 @@ fetch_file(){
 
     curl -L $rule_git/geoip.db -o geoip.db
     curl -L $rule_git/geosite.db -o geosite.db
+    curl -L https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt > hagezi.txt
+    curl -L https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.medium.txt > tif.txt
 
-    #$sb rule-set convert -t adguard adguard.txt -o adguard.srs
+    $sb rule-set convert -t adguard hagezi.txt -o hagezi.srs
+    wait $!
+    $sb rule-set convert -t adguard tif.txt -o tif.srs
     wait $!
 }
 
