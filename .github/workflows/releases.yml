@@ -1,4 +1,4 @@
-name: Release GEO
+name: Release
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq curl
           #sing-box
-          sb=1.9.6
+          sb=1.10.0
           curl -L https://github.com/SagerNet/sing-box/releases/download/v$sb/sing-box-$sb-linux-amd64.tar.gz  -o sing-box-$sb-linux-amd64.tar.gz
           tar xzvf sing-box-$sb-linux-amd64.tar.gz
           sudo mv ./sing-box-$sb-linux-amd64/sing-box /usr/local/bin/sing-box
