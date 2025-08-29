@@ -9,10 +9,13 @@ fetch_file(){
     curl -L $rule_git/geosite.db -o geosite.db
     curl -L https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt > hagezi.txt
     curl -L https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.medium.txt > tif.txt
+    curl -L https://easylist-downloads.adblockplus.org/antiadblockfilters.txt > antiadblock.txt
 
     $sb rule-set convert -t adguard hagezi.txt -o hagezi.srs
     wait $!
     $sb rule-set convert -t adguard tif.txt -o tif.srs
+    wait $!
+    $sb rule-set convert -t adguard antiadblock.txt -o antiadblock.srs
     wait $!
 }
 
