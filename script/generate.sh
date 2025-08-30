@@ -10,12 +10,15 @@ fetch_file(){
     curl -L https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt > hagezi.txt
     curl -L https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.medium.txt > tif.txt
     curl -L https://easylist-downloads.adblockplus.org/antiadblockfilters.txt > antiadblock.txt
+    curl -L https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt > abpindo.txt
 
     $sb rule-set convert -t adguard hagezi.txt -o hagezi.srs
     wait $!
     $sb rule-set convert -t adguard tif.txt -o tif.srs
     wait $!
     $sb rule-set convert -t adguard antiadblock.txt -o antiadblock.srs
+    wait $!
+    $sb rule-set convert -t adguard abpindo.txt -o abpindo.srs
     wait $!
 }
 
@@ -40,7 +43,7 @@ cleanup() {
 }
 
 main(){
-    local rule_site=("oisd-full" "oisd-nsfw" "rule-indo" "rule-doh" "rule-malicious" "bank-id" "youtube" "google" "google-ads" "rule-speedtest" "rule-ipcheck")
+    local rule_site=("oisd-nsfw" "rule-indo" "rule-doh" "rule-malicious" "bank-id" "youtube" "google" "google-ads" "rule-speedtest" "rule-ipcheck")
     local rule_ip=("netflix" "id")
     fetch_file
     export_compile "geosite" rule_site[@]
